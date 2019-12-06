@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <operators/arrow_star.hpp>
 #include <operators/binary_minus.hpp>
 #include <operators/bracket.hpp>
 #include <operators/compound_assignment.hpp>

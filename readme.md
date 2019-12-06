@@ -110,7 +110,12 @@ TODO
 
 ## `operator->*`
 
-TODO
+Defined in header `operators/arrow_star.hpp`.
+
+To create a definition of `lhs->*rhs` defined in terms of `(*lhs).*rhs`, there are two options:
+
+1) For all types in a namespace, use `using operators::operator->*;` in your namespace.
+2) For a specific type, derive from `operators::arrow_star` under the desired access control.
 
 # Extensions
 
