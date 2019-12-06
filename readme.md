@@ -1,6 +1,4 @@
-# operators
-
-## Overview
+# Overview
 
 This is a library that implements much of the functionality discussed in [P1046: Automatically Generate More Operators](https://github.com/davidstone/isocpp/blob/master/generate-operators.md). The summary of what is enabled this library is:
 
@@ -25,9 +23,9 @@ There are also some extensions described at the end of this document that are no
 
 There is a convenience header `operators/operators.hpp` that includes all other headers.
 
-## Proposed for standardization
+# Proposed for standardization
 
-### compound assignment operators (`operator+=`, etc.)
+## compound assignment operators (`operator+=`, etc.)
 
 The proposal currently suggests that the language provides all of these by default. However, another option is to standardize some subset of the following library features. A third option is something like `auto & operator+=(T &, U const &) = default;`.
 
@@ -60,63 +58,63 @@ To create a definition of `lhs @= rhs` in terms of `lhs = std::move(lhs) @ rhs`,
    * `operators::xor_equal`
 4) For all of the previous operators and for a specific type, derive from `operators::compound_assignment` under the desired access control.
 
-### `operator++` and `operator--`
+## `operator++` and `operator--`
 
 Defined in header `operators/increment_decrement.hpp`.
 
-#### Prefix `operator++`
+### Prefix `operator++`
 
 To create a definition of `++a` in terms of `a += 1`, there are two options:
 
 1) For all types in a namespace, use `using operators::prefix::operator++;` in your namespace.
 2) For a specific type, derive from `operators::prefix::operator++` under the desired access control.
 
-#### Postfix `operator++`
+### Postfix `operator++`
 
 To create a definition of `a++` in terms of `++a` (but return a copy of the original value for copyable types and return `void` for non-copyable types), there are two options:
 
 1) For all types in a namespace, use `using operators::postfix::operator++;` in your namespace.
 2) For a specific type, derive from `operators::postfix::operator++` under the desired access control.
 
-#### Prefix and postfix `operator++`
+### Prefix and postfix `operator++`
 
 To combine the previous two and define `++a` and `a++`, there are two options:
 
 1) For all types in a namespace, use `using operators::operator++;` in your namespace.
 2) For a specific type, derive from `operators::operator++` under the desired access control.
 
-#### Prefix `operator--`
+### Prefix `operator--`
 
 To create a definition of `--a` in terms of `a -= 1`, there are two options:
 
 1) For all types in a namespace, use `using operators::prefix::operator--;` in your namespace.
 2) For a specific type, derive from `operators::prefix::operator--` under the desired access control.
 
-#### Postfix `operator--`
+### Postfix `operator--`
 
 To create a definition of `a--` in terms of `--a` (but return a copy of the original value for copyable types and return `void` for non-copyable types), there are two options:
 
 1) For all types in a namespace, use `using operators::postfix::operator--;` in your namespace.
 2) For a specific type, derive from `operators::postfix::operator--` under the desired access control.
 
-#### Prefix and postfix `operator--`
+### Prefix and postfix `operator--`
 
 To combine the previous two and define `--a` and `a--`, there are two options:
 
 1) For all types in a namespace, use `using operators::operator--;` in your namespace.
 2) For a specific type, derive from `operators::operator--` under the desired access control.
 
-### `operator->`
+## `operator->`
 
 TODO
 
-### `operator->*`
+## `operator->*`
 
 TODO
 
-## Extensions
+# Extensions
 
-### `operator[]`
+## `operator[]`
 
 Defined in header `operators/bracket.hpp`.
 
@@ -132,7 +130,7 @@ To create a definition of `lhs[rhs]` defined in terms of `*(begin(lhs) + rhs)` (
 1) For a specific type, type the macro `OPERATORS_BRACKET_SEQUENCE_RANGE_DEFINITIONS` in your class body under the desired access control.
 2) For a specific type, derive from `operators::bracket::sequence_range<your_type_name>` under the desired access control.
 
-### binary `operator-`
+## binary `operator-`
 
 Defined in header `operators/binary_minus.hpp`.
 
@@ -143,7 +141,7 @@ To create a definition of `lhs - rhs` in terms of `lhs + -rhs`, there are two op
 
 Note: do not combine this with unary `operator-`. This will create a (diagnosed at compile time) circular dependency.
 
-### unary `operator-`
+## unary `operator-`
 
 Defined in header `operators/unary_minus.hpp`.
 
@@ -154,7 +152,7 @@ To create a definition of `-a` in terms of `0 - a`, there are two options:
 
 Note: do not combine this with binary `operator-`. This will create a (diagnosed at compile time) circular dependency.
 
-### unary `operator+`
+## unary `operator+`
 
 Defined in header `operators/unary_plus.hpp`.
 
