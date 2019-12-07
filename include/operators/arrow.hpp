@@ -71,17 +71,17 @@ struct indirect {
 // they move from a value declared const. Neither of those are the end of the
 // world, but are still unfortunate.
 #define OPERATORS_DETAIL_ARROW_DEFINITIONS_IMPL(self, function) \
-	template<typename T = ::operators::detail::indirect> \
+	template<typename operators_indirect_identity = ::operators::detail::indirect> \
 	constexpr auto operator->() const & OPERATORS_RETURNS( \
-		function(*self(T::identity(*this))) \
+		function(*self(operators_indirect_identity::identity(*this))) \
 	) \
-	template<typename T = ::operators::detail::indirect> \
+	template<typename operators_indirect_identity = ::operators::detail::indirect> \
 	constexpr auto operator->() & OPERATORS_RETURNS( \
-		function(*self(T::identity(*this))) \
+		function(*self(operators_indirect_identity::identity(*this))) \
 	) \
-	template<typename T = ::operators::detail::indirect> \
+	template<typename operators_indirect_identity = ::operators::detail::indirect> \
 	constexpr auto operator->() && OPERATORS_RETURNS( \
-		function(*self(T::identity(std::move(*this)))) \
+		function(*self(operators_indirect_identity::identity(std::move(*this)))) \
 	) \
 	auto operator->() const && = delete;
 
