@@ -70,9 +70,6 @@ private:
 	constexpr auto self() & -> Derived & {
 		return static_cast<Derived &>(*this);
 	}
-	constexpr auto self() && -> Derived && {
-		return static_cast<Derived &&>(*this);
-	}
 public:
 	OPERATORS_DETAIL_BRACKET_ITERATOR_DEFINITIONS_IMPL(self())
 };
@@ -86,9 +83,6 @@ private:
 	}
 	constexpr auto self() & -> Derived & {
 		return static_cast<Derived &>(*this);
-	}
-	constexpr auto self() && -> Derived && {
-		return static_cast<Derived &&>(*this);
 	}
 public:
 	OPERATORS_DETAIL_BRACKET_SEQUENCE_RANGE_DEFINITIONS_IMPL(self())

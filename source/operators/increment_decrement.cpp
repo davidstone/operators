@@ -31,32 +31,32 @@ constexpr auto prefix_decrement = [](auto & value) { return --value; };
 constexpr auto postfix_decrement = [](auto & value) { return value--; };
 
 constexpr auto test_increment_decrement(auto value, auto const expected_value, auto const expected_result, auto const function) {
-    auto const result = function(value);
-    return result == expected_result and value == expected_value;
+	auto const result = function(value);
+	return result == expected_result and value == expected_value;
 }
 
 namespace base_all {
 
 struct s : operators::increment, operators::decrement {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -69,25 +69,25 @@ static_assert(test_increment_decrement(s(5), s(4), s(5), postfix_decrement));
 namespace base_increment {
 
 struct s : operators::increment {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -99,25 +99,25 @@ static_assert(!has_decrement<s>);
 namespace base_decrement {
 
 struct s : operators::decrement {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -129,25 +129,25 @@ static_assert(test_increment_decrement(s(5), s(4), s(5), postfix_decrement));
 namespace base_prefix_increment {
 
 struct s : operators::prefix::increment {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -159,25 +159,25 @@ static_assert(!has_decrement<s>);
 namespace bad_base_postfix_increment {
 
 struct s : operators::postfix::increment {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -188,25 +188,25 @@ static_assert(!has_decrement<s>);
 namespace base_postfix_increment {
 
 struct s : operators::postfix::increment {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator++(auto & x) {
-        ++x.value;
-        return x;
-    }
-    friend constexpr auto & operator--(auto & x) {
-        --x.value;
-        return x;
-    }
+	friend constexpr auto & operator++(auto & x) {
+		++x.value;
+		return x;
+	}
+	friend constexpr auto & operator--(auto & x) {
+		--x.value;
+		return x;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -218,25 +218,25 @@ static_assert(!has_decrement<s>);
 namespace base_prefix_decrement {
 
 struct s : operators::prefix::decrement {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -248,25 +248,25 @@ static_assert(!has_postfix_decrement<s>);
 namespace base_base_postfix_decrement {
 
 struct s : operators::postfix::decrement {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_decrement<s>);
@@ -277,25 +277,25 @@ static_assert(!has_decrement<s>);
 namespace base_postfix_decrement {
 
 struct s : operators::postfix::decrement {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator++(auto & x) {
-        ++x.value;
-        return x;
-    }
-    friend constexpr auto & operator--(auto & x) {
-        --x.value;
-        return x;
-    }
+	friend constexpr auto & operator++(auto & x) {
+		++x.value;
+		return x;
+	}
+	friend constexpr auto & operator--(auto & x) {
+		--x.value;
+		return x;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -310,25 +310,25 @@ using operators::operator++;
 using operators::operator--;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -349,25 +349,25 @@ namespace declarations_increment {
 using operators::operator++;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -386,25 +386,25 @@ namespace declarations_decrement {
 using operators::operator--;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -423,25 +423,25 @@ namespace declarations_prefix_increment {
 using operators::prefix::operator++;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -460,25 +460,25 @@ namespace declarations_bad_postfix_increment {
 using operators::postfix::operator++;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -495,25 +495,25 @@ namespace declarations_postfix_increment {
 using operators::postfix::operator++;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator++(auto & x) {
-        ++x.value;
-        return x;
-    }
-    friend constexpr auto & operator--(auto & x) {
-        --x.value;
-        return x;
-    }
+	friend constexpr auto & operator++(auto & x) {
+		++x.value;
+		return x;
+	}
+	friend constexpr auto & operator--(auto & x) {
+		--x.value;
+		return x;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(test_increment_decrement(s(5), s(6), s(6), prefix_increment));
@@ -532,25 +532,25 @@ namespace declarations_prefix_decrement {
 using operators::prefix::operator--;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);
@@ -569,25 +569,25 @@ namespace declarations_bad_postfix_decrement {
 using operators::postfix::operator--;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator+=(auto & lhs, int rhs) {
-        lhs.value += rhs;
-        return lhs;
-    }
-    friend constexpr auto & operator-=(auto & lhs, int rhs) {
-        lhs.value -= rhs;
-        return lhs;
-    }
+	friend constexpr auto & operator+=(auto & lhs, int rhs) {
+		lhs.value += rhs;
+		return lhs;
+	}
+	friend constexpr auto & operator-=(auto & lhs, int rhs) {
+		lhs.value -= rhs;
+		return lhs;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_decrement<s>);
@@ -604,25 +604,25 @@ namespace declarations_postfix_decrement {
 using operators::postfix::operator--;
 
 struct s {
-    constexpr explicit s(int value_):
-        value(value_)
-    {
-    }
+	constexpr explicit s(int value_):
+		value(value_)
+	{
+	}
 
-    friend constexpr auto & operator++(auto & x) {
-        ++x.value;
-        return x;
-    }
-    friend constexpr auto & operator--(auto & x) {
-        --x.value;
-        return x;
-    }
+	friend constexpr auto & operator++(auto & x) {
+		++x.value;
+		return x;
+	}
+	friend constexpr auto & operator--(auto & x) {
+		--x.value;
+		return x;
+	}
 
-    friend constexpr auto operator==(s const lhs, s const rhs) {
-        return lhs.value == rhs.value;
-    }
+	friend constexpr auto operator==(s const lhs, s const rhs) {
+		return lhs.value == rhs.value;
+	}
 private:
-    int value;
+	int value;
 };
 
 static_assert(!has_increment<s>);

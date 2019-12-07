@@ -10,26 +10,26 @@
 namespace {
 
 struct move_only {
-    move_only() = default;
-    move_only(move_only const &) = delete;
-    move_only(move_only &&) = default;
+	move_only() = default;
+	move_only(move_only const &) = delete;
+	move_only(move_only &&) = default;
 };
 
 auto parameter(auto x) OPERATORS_RETURNS(
-    x
+	x
 )
 
 static_assert(std::is_same_v<decltype(parameter(5)), int>);
 static_assert(std::is_same_v<decltype(parameter(move_only())), move_only>);
 
 auto prvalue() OPERATORS_RETURNS(
-    move_only()
+	move_only()
 )
 
 static_assert(std::is_same_v<decltype(prvalue()), move_only>);
 
 auto ref(auto && r) OPERATORS_RETURNS(
-    r
+	r
 )
 
 static_assert(std::is_same_v<decltype(ref(move_only())), move_only &&>);
