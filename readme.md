@@ -16,8 +16,8 @@ This is a library that implements much of the functionality discussed in [P1046:
 * Generate `--x` as `x -= 1`
 * Generate `x++` as `++x` but return a copy of the original value
 * Generate `x--` as `--x` but return a copy of the original value
-* Generate `lhs->rhs` as `(*lhs).rhs` (TODO)
-* Generate `lhs->*rhs` as `(*lhs).*rhs` (TODO)
+* Generate `lhs->rhs` as `(*lhs).rhs`
+* Generate `lhs->*rhs` as `(*lhs).*rhs`
 
 There are also some extensions described at the end of this document that are not being proposed for standardization at this time.
 
@@ -106,7 +106,19 @@ To combine the previous two and define `--a` and `a--`, there are two options:
 
 ## `operator->`
 
-TODO
+Defined in header `operators/arrow.hpp`.
+
+There are currently two forms of `operator->` supported by the `operators` library.
+
+To create a definition of `lhs->rhs` defined in terms of `*(lhs).rhs` that does not work for `operator*` that returns by value, there are two options:
+
+1) For a specific type, type the macro `OPERATORS_ARROW_DEFINITIONS` in your class body under the desired access control.
+2) For a specific type, derive from `operators::arrow<your_type_name>` under the desired access control.
+
+To create a definition of `lhs->rhs` defined in terms of `*(lhs).rhs` that does work for `operator*` that returns by value, but risks creating a dangling reference with some common refactorings, and can cause a move construction to occur, there are two options:
+
+1) For a specific type, type the macro `OPERATORS_ARROW_PROXY_DEFINITIONS` in your class body under the desired access control.
+2) For a specific type, derive from `operators::arrow_proxy<your_type_name>` under the desired access control.
 
 ## `operator->*`
 
