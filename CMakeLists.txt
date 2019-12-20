@@ -85,6 +85,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 		"-stdlib=libc++"
 	)
 	target_compile_options(operators_test PRIVATE
+		${COMMON_CLANG_WARNINGS}
 		"-g"
 		"-march=native"
 		$<$<CONFIG:Release>:-flto=thin>
