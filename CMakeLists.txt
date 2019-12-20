@@ -48,6 +48,8 @@ target_link_libraries(operators_test PUBLIC operators)
 set(COMMON_CLANG_COMPILE_OPTIONS
 	"-Xclang"
 	"-fconcepts-ts"
+)
+set(COMMON_CLANG_WARNINGS
 	"-Weverything"
 	"-Werror"
 	"-Wno-c++98-compat"
@@ -68,9 +70,8 @@ if(MSVC)
 	)
 
 	if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-		target_compile_options(operators INTERFACE
-			${COMMON_CLANG_COMPILE_OPTIONS}
-		)
+		target_compile_options(operators INTERFACE ${COMMON_CLANG_COMPILE_OPTIONS})
+		target_compile_options(operators_test PRIVATE ${COMMON_CLANG_WARNINGS})
 	else()
 		target_compile_options(operators INTERFACE
 			"/FI ciso646"
@@ -79,18 +80,18 @@ if(MSVC)
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	target_compile_options(operators INTERFACE
-		"-std=c++2a"
-	)
-	target_compile_options(operators INTERFACE
 		${COMMON_CLANG_COMPILE_OPTIONS}
-		"-g"
+		"-std=c++2a"
 		"-stdlib=libc++"
+	)
+	target_compile_options(operators_test PRIVATE
+		"-g"
 		"-march=native"
 		$<$<CONFIG:Release>:-flto=thin>
 	)
 	target_link_options(operators INTERFACE
-		"-Wl,--fatal-warnings"
 		"-stdlib=libc++"
+		"-Wl,--fatal-warnings"
 		"-fuse-ld=lld"
 		# TODO: Figure out how to make this work on Visual Studio
 		"-Wl,--thinlto-cache-dir=${CMAKE_BINARY_DIR}/lto-cache"
@@ -99,11 +100,11 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	target_compile_options(operators INTERFACE
 		"-std=c++2a"
+		"-fconcepts"
 	)
-	target_compile_options(operators INTERFACE
+	target_compile_options(operators_test PRIVATE
 		"-g"
 		"-march=native"
-		"-fconcepts"
 		$<$<CONFIG:Release>:-flto=4 -flto-odr-type-merging -fuse-linker-plugin>
 		"-Wall"
 		"-Wextra"
