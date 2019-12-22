@@ -225,6 +225,9 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 		"-march=native"
 		$<$<CONFIG:Release>:-flto=4 -flto-odr-type-merging -fuse-linker-plugin>
 	)
+	target_link_options(strict_defaults INTERFACE
+		"-Wl,--fatal-warnings"
+	)
 else()
 	message(FATAL_ERROR "Unknown compiler " "${CMAKE_CXX_COMPILER_ID}")
 endif()
