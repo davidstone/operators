@@ -45,57 +45,45 @@ add_executable(operators_test
 
 target_link_libraries(operators_test PUBLIC operators)
 
-set(COMMON_CLANG_COMPILE_OPTIONS
-	"-Xclang"
-	"-fconcepts-ts"
-)
-set(COMMON_CLANG_WARNINGS
-	"-Weverything"
-	"-Werror"
-	"-Wno-c++98-compat"
-	"-Wno-c++98-compat-pedantic"
-	"-Wno-newline-eof"
-	"-Wno-unused-function"
-	"-Wno-unused-member-function"
-	"-Wno-unused-template"
-)
-
-if(MSVC)
-	target_compile_options(operators INTERFACE
-		"/std:c++latest"
-		"/MP"
-	)
-	target_link_options(operators INTERFACE
-		"/WX"
-	)
-
-	if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-		target_compile_options(operators INTERFACE ${COMMON_CLANG_COMPILE_OPTIONS})
-		target_compile_options(operators_test PRIVATE ${COMMON_CLANG_WARNINGS})
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	if(MSVC)
+		target_compile_options(operators INTERFACE
+			"/std:c++latest"
+		)
+		target_link_options(operators INTERFACE
+			"/WX"
+		)
+		target_compile_options(operators_test PRIVATE
+			"/MP"
+		)
 	else()
 		target_compile_options(operators INTERFACE
-			"/FI ciso646"
+			"-Xclang"
+			"-fconcepts-ts"
+			"-std=c++2a"
+			"-stdlib=libc++"
+		)
+		target_link_options(operators INTERFACE
+			"-stdlib=libc++"
+			"-Wl,--fatal-warnings"
+			"-fuse-ld=lld"
+			# TODO: Figure out how to make this work on Visual Studio
+			"-Wl,--thinlto-cache-dir=${CMAKE_BINARY_DIR}/lto-cache"
 		)
 	endif()
 
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	target_compile_options(operators INTERFACE
-		${COMMON_CLANG_COMPILE_OPTIONS}
-		"-std=c++2a"
-		"-stdlib=libc++"
-	)
 	target_compile_options(operators_test PRIVATE
-		${COMMON_CLANG_WARNINGS}
+		"-Weverything"
+		"-Werror"
+		"-Wno-c++98-compat"
+		"-Wno-c++98-compat-pedantic"
+		"-Wno-newline-eof"
+		"-Wno-unused-function"
+		"-Wno-unused-member-function"
+		"-Wno-unused-template"
 		"-g"
 		"-march=native"
 		$<$<CONFIG:Release>:-flto=thin>
-	)
-	target_link_options(operators INTERFACE
-		"-stdlib=libc++"
-		"-Wl,--fatal-warnings"
-		"-fuse-ld=lld"
-		# TODO: Figure out how to make this work on Visual Studio
-		"-Wl,--thinlto-cache-dir=${CMAKE_BINARY_DIR}/lto-cache"
 	)
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -169,6 +157,8 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 		"-Wvector-operation-performance"
 		"-Werror"
 	)
+else()
+	message(FATAL_ERROR "Unknown compiler " "${CMAKE_CXX_COMPILER_ID}")
 endif()
 
 set(all_targets operators_test)
