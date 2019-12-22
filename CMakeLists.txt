@@ -144,7 +144,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 		# be useful to apply this one periodically and manually verify the
 		# results. It generated this warning in my code when I looped over all
 		# elements in a vector to apply a set of functions to them (using the
-		# range-based for loop).  It is also warning for the constructor of a
+		# range-based for loop). It is also warning for the constructor of a
 		# const array of const std::string where there is no loop in user code.
 		# "-Wunsafe-loop-optimizations"
 		# -Wunused-but-set-parameter does not properly account for
