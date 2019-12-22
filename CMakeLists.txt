@@ -11,19 +11,6 @@ enable_testing()
 
 add_library(operators INTERFACE)
 
-target_sources(operators INTERFACE
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/arrow.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/arrow_star.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/binary_minus.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/bracket.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/compound_assignment.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/forward.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/increment_decrement.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/operators.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/unary_minus.hpp
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include/operators/unary_plus.hpp
-)
-
 target_include_directories(operators INTERFACE
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 	$<INSTALL_INTERFACE:include>
