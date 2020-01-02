@@ -104,7 +104,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 		"-Wno-zero-as-null-pointer-constant"
 
 		"-g"
-		"-march=native"
 		$<$<CONFIG:Release>:-flto=thin>
 	)
 
@@ -222,7 +221,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 		"-Werror"
 
 		"-g"
-		"-march=native"
 		$<$<CONFIG:Release>:-flto=4 -flto-odr-type-merging -fuse-linker-plugin>
 	)
 	target_link_options(strict_defaults INTERFACE
