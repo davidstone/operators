@@ -230,6 +230,8 @@ else()
 	message(FATAL_ERROR "Unknown compiler " "${CMAKE_CXX_COMPILER_ID}")
 endif()
 
+set(sanitizers "-fsanitize=address;-fsanitize=undefined")
+
 if(DEFINED USE_SANITIZERS)
 	if(${USE_SANITIZERS})
 		target_compile_options(strict_defaults PUBLIC ${sanitizers})
