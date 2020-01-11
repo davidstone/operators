@@ -67,42 +67,42 @@ Defined in header `operators/increment_decrement.hpp`.
 To create a definition of `++a` in terms of `a += 1`, there are two options:
 
 1) For all types in a namespace, use `using operators::prefix::operator++;` in your namespace.
-2) For a specific type, derive from `operators::prefix::operator++` under the desired access control.
+2) For a specific type, derive from `operators::prefix::increment` under the desired access control.
 
 ### Postfix `operator++`
 
 To create a definition of `a++` in terms of `++a` (but return a copy of the original value for copyable types and return `void` for non-copyable types), there are two options:
 
 1) For all types in a namespace, use `using operators::postfix::operator++;` in your namespace.
-2) For a specific type, derive from `operators::postfix::operator++` under the desired access control.
+2) For a specific type, derive from `operators::postfix::increment` under the desired access control.
 
 ### Prefix and postfix `operator++`
 
 To combine the previous two and define `++a` and `a++`, there are two options:
 
 1) For all types in a namespace, use `using operators::operator++;` in your namespace.
-2) For a specific type, derive from `operators::operator++` under the desired access control.
+2) For a specific type, derive from `operators::increment` under the desired access control.
 
 ### Prefix `operator--`
 
 To create a definition of `--a` in terms of `a -= 1`, there are two options:
 
 1) For all types in a namespace, use `using operators::prefix::operator--;` in your namespace.
-2) For a specific type, derive from `operators::prefix::operator--` under the desired access control.
+2) For a specific type, derive from `operators::prefix::decrement` under the desired access control.
 
 ### Postfix `operator--`
 
 To create a definition of `a--` in terms of `--a` (but return a copy of the original value for copyable types and return `void` for non-copyable types), there are two options:
 
 1) For all types in a namespace, use `using operators::postfix::operator--;` in your namespace.
-2) For a specific type, derive from `operators::postfix::operator--` under the desired access control.
+2) For a specific type, derive from `operators::postfix::decrement` under the desired access control.
 
 ### Prefix and postfix `operator--`
 
 To combine the previous two and define `--a` and `a--`, there are two options:
 
 1) For all types in a namespace, use `using operators::operator--;` in your namespace.
-2) For a specific type, derive from `operators::operator--` under the desired access control.
+2) For a specific type, derive from `operators::decrement` under the desired access control.
 
 ## `operator->`
 
