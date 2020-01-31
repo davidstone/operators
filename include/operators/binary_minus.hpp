@@ -8,6 +8,8 @@
 #include <operators/forward.hpp>
 #include <operators/returns.hpp>
 
+#include <compare>
+
 // Not proposed for standardization
 namespace operators::binary {
 // cannot use inline namespace because that causes unintended ADL
@@ -17,7 +19,9 @@ constexpr auto operator-(auto && lhs, auto && rhs) OPERATORS_RETURNS(
 	OPERATORS_FORWARD(lhs) + -OPERATORS_FORWARD(rhs)
 )
 
-struct minus {};
+struct minus {
+	friend auto operator<=>(minus const &, minus const &) = default;
+};
 
 } // namespace binary_minus
 

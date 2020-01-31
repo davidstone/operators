@@ -7,6 +7,8 @@
 
 #include <operators/returns.hpp>
 
+#include <compare>
+
 // Not proposed for standardization
 namespace operators::unary {
 // cannot use inline namespace because that causes unintended ADL
@@ -16,7 +18,9 @@ constexpr auto operator+(auto value) OPERATORS_RETURNS(
 	value
 )
 
-struct plus {};
+struct plus {
+	friend auto operator<=>(plus const &, plus const &) = default;
+};
 
 } // namespace unary_plus
 

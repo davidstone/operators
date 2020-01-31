@@ -8,6 +8,8 @@
 #include <operators/forward.hpp>
 #include <operators/returns.hpp>
 
+#include <compare>
+
 namespace operators {
 // cannot use inline namespace because that causes unintended ADL
 namespace arrow_star_impl {
@@ -16,7 +18,9 @@ constexpr auto operator->*(auto && lhs, auto && rhs) OPERATORS_RETURNS(
 	(*OPERATORS_FORWARD(lhs)).*OPERATORS_FORWARD(rhs)
 )
 
-struct arrow_star {};
+struct arrow_star {
+	friend auto operator<=>(arrow_star const &, arrow_star const &) = default;
+};
 
 } // namespace arrow_star_impl
 

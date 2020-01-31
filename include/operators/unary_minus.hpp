@@ -8,6 +8,8 @@
 #include <operators/forward.hpp>
 #include <operators/returns.hpp>
 
+#include <compare>
+
 // Not proposed for standardization
 namespace operators::unary {
 // cannot use inline namespace because that causes unintended ADL
@@ -17,7 +19,9 @@ constexpr auto operator-(auto && value) OPERATORS_RETURNS(
 	0 - OPERATORS_FORWARD(value)
 )
 
-struct minus {};
+struct minus {
+	friend auto operator<=>(minus const &, minus const &) = default;
+};
 
 } // namespace unary_minus
 

@@ -7,6 +7,7 @@
 
 #include <operators/returns.hpp>
 
+#include <compare>
 #include <type_traits>
 
 // cannot use inline namespaces because that causes unintended ADL
@@ -28,7 +29,9 @@ constexpr auto operator++(auto & value) OPERATORS_RETURNS(
 	value += 1
 )
 
-struct prefix_increment_tag {};
+struct prefix_increment_tag {
+	friend auto operator<=>(prefix_increment_tag const &, prefix_increment_tag const &) = default;
+};
 
 } // namespace prefix_increment;
 
@@ -41,7 +44,9 @@ constexpr auto operator--(auto & value) OPERATORS_RETURNS(
 	value -= 1
 )
 
-struct prefix_decrement_tag {};
+struct prefix_decrement_tag {
+	friend auto operator<=>(prefix_decrement_tag const &, prefix_decrement_tag const &) = default;
+};
 
 } // namespace prefix_decrement
 
@@ -69,7 +74,9 @@ constexpr auto operator++(T & value, int) {
 	}
 }
 
-struct postfix_increment_tag {};
+struct postfix_increment_tag {
+	friend auto operator<=>(postfix_increment_tag const &, postfix_increment_tag const &) = default;
+};
 
 } // namespace postfix_increment
 
@@ -89,7 +96,9 @@ constexpr auto operator--(T & value, int) {
 	}
 }
 
-struct postfix_decrement_tag {};
+struct postfix_decrement_tag {
+	friend auto operator<=>(postfix_decrement_tag const &, postfix_decrement_tag const &) = default;
+};
 
 } // namespace postfix_decrement
 
@@ -111,7 +120,9 @@ namespace all_increment {
 using prefix::operator++;
 using postfix::operator++;
 
-struct increment {};
+struct increment {
+	friend auto operator<=>(increment const &, increment const &) = default;
+};
 
 } // namespace all_increment
 using namespace all_increment;
@@ -121,7 +132,9 @@ namespace all_decrement {
 using prefix::operator--;
 using postfix::operator--;
 
-struct decrement {};
+struct decrement {
+	friend auto operator<=>(decrement const &, decrement const &) = default;
+};
 
 } // namespace all_decrement
 using namespace all_decrement;

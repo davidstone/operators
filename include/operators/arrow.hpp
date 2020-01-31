@@ -8,6 +8,7 @@
 #include <operators/forward.hpp>
 #include <operators/returns.hpp>
 
+#include <compare>
 #include <memory>
 #include <type_traits>
 
@@ -103,12 +104,14 @@ struct indirect {
 template<typename Derived>
 struct arrow {
 	OPERATORS_DETAIL_ARROW_DEFINITIONS(::operators::detail::cast_self<Derived>)
+	friend auto operator<=>(arrow const &, arrow const &) = default;
 };
 
 
 template<typename Derived>
 struct arrow_proxy {
 	OPERATORS_DETAIL_ARROW_PROXY_DEFINITIONS(::operators::detail::cast_self<Derived>)
+	friend auto operator<=>(arrow_proxy const &, arrow_proxy const &) = default;
 };
 
 } // namespace operators

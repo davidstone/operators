@@ -8,6 +8,7 @@
 #include <operators/forward.hpp>
 #include <operators/returns.hpp>
 
+#include <compare>
 #include <type_traits>
 
 // Not proposed for standardization
@@ -72,6 +73,7 @@ private:
 	}
 public:
 	OPERATORS_DETAIL_BRACKET_ITERATOR_DEFINITIONS_IMPL(self())
+	friend auto operator<=>(iterator const &, iterator const &) = default;
 };
 
 
@@ -86,6 +88,7 @@ private:
 	}
 public:
 	OPERATORS_DETAIL_BRACKET_SEQUENCE_RANGE_DEFINITIONS_IMPL(self())
+	friend auto operator<=>(sequence_range const &, sequence_range const &) = default;
 };
 
 } // namespace bracket
