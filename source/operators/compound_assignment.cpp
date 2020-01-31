@@ -38,7 +38,7 @@ namespace {
 	friend constexpr auto operator^(type const lhs, type const rhs) { \
 		return type(lhs.value ^ rhs.value); \
 	} \
-	friend constexpr auto operator==(type const lhs, type const rhs) { \
+	friend constexpr auto operator==(type const lhs, type const rhs) -> bool { \
 		return lhs.value == rhs.value; \
 	}
 

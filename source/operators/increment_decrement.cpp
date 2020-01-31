@@ -52,7 +52,7 @@ struct s : operators::increment, operators::decrement {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -83,7 +83,7 @@ struct s : operators::increment {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -113,7 +113,7 @@ struct s : operators::decrement {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -143,7 +143,7 @@ struct s : operators::prefix::increment {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -173,7 +173,7 @@ struct s : operators::postfix::increment {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -202,7 +202,7 @@ struct s : operators::postfix::increment {
 		return x;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -232,7 +232,7 @@ struct s : operators::prefix::decrement {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -262,7 +262,7 @@ struct s : operators::postfix::decrement {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -291,7 +291,7 @@ struct s : operators::postfix::decrement {
 		return x;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -324,7 +324,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -363,7 +363,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -400,7 +400,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -437,7 +437,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -474,7 +474,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -509,7 +509,7 @@ struct s {
 		return x;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -546,7 +546,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -583,7 +583,7 @@ struct s {
 		return lhs;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
@@ -618,7 +618,7 @@ struct s {
 		return x;
 	}
 
-	friend constexpr auto operator==(s const lhs, s const rhs) {
+	friend constexpr auto operator==(s const lhs, s const rhs) -> bool {
 		return lhs.value == rhs.value;
 	}
 private:
