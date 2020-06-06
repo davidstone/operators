@@ -57,9 +57,9 @@ static_assert(has_operator_arrow<macro_ref const &>);
 
 static_assert(as_const_ref(macro_ref(5))->value == 5);
 static_assert(as_ref(macro_ref(5))->value == 15);
-//static_assert(as_ref_ref(macro_ref(5))->value == 5);
-static_assert(!has_operator_arrow<macro_ref &&>);
-static_assert(!has_operator_arrow<macro_ref>);
+static_assert(as_ref_ref(macro_ref(5))->value == 25);
+static_assert(has_operator_arrow<macro_ref &&>);
+static_assert(has_operator_arrow<macro_ref>);
 
 
 struct macro_ref_proxy {
@@ -172,8 +172,8 @@ private:
 
 static_assert(as_const_ref(crtp_ref(5))->value == 5);
 static_assert(as_ref(crtp_ref(5))->value == 15);
-static_assert(!has_operator_arrow<crtp_ref &&>);
-static_assert(!has_operator_arrow<crtp_ref>);
+static_assert(as_ref_ref(crtp_ref(5))->value == 25);
+static_assert(crtp_ref(5)->value == 25);
 
 
 

@@ -47,11 +47,6 @@ private:
 	T value;
 };
 
-// TODO: It might be ideal to store the exact type returned by `operator*`,
-// meaning a value for values and an rvalue reference for rvalue references.
-template<typename T>
-arrow_proxy_value(T &&) -> arrow_proxy_value<T>;
-
 // This delays the instantiation of the arrow operator until it is called. This
 // allows you to use an `operator*` that is defined outside of the class or
 // defined with a deduced return type.
@@ -60,6 +55,9 @@ struct indirect {
 		return OPERATORS_FORWARD(value);
 	}
 };
+
+#define OPERATORS_DETAIL_TEMPLATE_DECLTYPE_EXPRESSION(function, ...) \
+	function<decltype(__VA_ARGS__)>(__VA_ARGS__)
 
 // It does not seem possible to make `operator->` SFINAE friendly, safe, and
 // work with const return values. If we make it SFINAE friendly and we have a
@@ -74,20 +72,35 @@ struct indirect {
 #define OPERATORS_DETAIL_ARROW_DEFINITIONS_IMPL(self, function) \
 	template<typename operators_indirect_identity = ::operators::detail::indirect> \
 	constexpr auto operator->() const & OPERATORS_RETURNS( \
-		function(*self(operators_indirect_identity::identity(*this))) \
+		OPERATORS_DETAIL_TEMPLATE_DECLTYPE_EXPRESSION( \
+			function, \
+			*self(operators_indirect_identity::identity(*this)) \
+		) \
 	) \
 	template<typename operators_indirect_identity = ::operators::detail::indirect> \
 	constexpr auto operator->() & OPERATORS_RETURNS( \
-		function(*self(operators_indirect_identity::identity(*this))) \
+		OPERATORS_DETAIL_TEMPLATE_DECLTYPE_EXPRESSION( \
+			function, \
+			*self(operators_indirect_identity::identity(*this)) \
+		) \
 	) \
 	template<typename operators_indirect_identity = ::operators::detail::indirect> \
 	constexpr auto operator->() && OPERATORS_RETURNS( \
-		function(*self(operators_indirect_identity::identity(std::move(*this)))) \
+		OPERATORS_DETAIL_TEMPLATE_DECLTYPE_EXPRESSION( \
+			function, \
+			*self(operators_indirect_identity::identity(std::move(*this))) \
+		) \
 	) \
 	auto operator->() const && = delete;
 
+// This works on rvalue references
+template<typename T> requires std::is_reference_v<T>
+constexpr auto addressof_wrapper(auto && object) noexcept {
+	return ::std::addressof(object);
+}
+
 #define OPERATORS_DETAIL_ARROW_DEFINITIONS(self) \
-	OPERATORS_DETAIL_ARROW_DEFINITIONS_IMPL(self, ::std::addressof)
+	OPERATORS_DETAIL_ARROW_DEFINITIONS_IMPL(self, ::operators::detail::addressof_wrapper)
 
 #define OPERATORS_DETAIL_ARROW_PROXY_DEFINITIONS(self) \
 	OPERATORS_DETAIL_ARROW_DEFINITIONS_IMPL(self, ::operators::detail::arrow_proxy_value)
