@@ -93,25 +93,17 @@ static_assert(macro_ref_proxy(5)->value == 25);
 
 
 struct macro_value {
-	constexpr explicit macro_value(int value_):
-		value{value_}
-	{
-	}
-
 	constexpr auto operator*() const & {
-		return value;
+		return wrapper{0};
 	}
 	constexpr auto operator*() & {
-		return wrapper{value.value + 10};
+		return wrapper{0};
 	}
 	constexpr auto operator*() && {
-		return wrapper{value.value + 20};
+		return wrapper{0};
 	}
 
 	OPERATORS_ARROW_DEFINITIONS
-
-private:
-	wrapper value;
 };
 
 static_assert(!has_operator_arrow<macro_value const &>);
