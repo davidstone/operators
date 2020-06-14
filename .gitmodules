@@ -1,3 +1,3 @@
 [submodule "cmake_strict_defaults"]
 	path = cmake_strict_defaults
-	url = git@github.com:davidstone/cmake_strict_defaults.git
+	url = https://github.com/davidstone/cmake_strict_defaults.git
