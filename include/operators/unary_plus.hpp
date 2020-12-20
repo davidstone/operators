@@ -19,7 +19,7 @@ constexpr auto operator+(auto value) OPERATORS_RETURNS(
 )
 
 struct plus {
-	friend auto operator<=>(plus const &, plus const &) = default;
+	friend auto operator<=>(plus, plus) = default;
 };
 
 } // namespace unary_plus

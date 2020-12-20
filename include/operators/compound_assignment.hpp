@@ -49,7 +49,7 @@ OPERATORS_COMPOUND_ASSIGNMENT_OPERATORS(^)
 	using ::operators::operator^=;
 
 struct compound_assignment {
-	friend auto operator<=>(compound_assignment const &, compound_assignment const &) = default;
+	friend auto operator<=>(compound_assignment, compound_assignment) = default;
 };
 
 } // namespace compound_assignment_impl
@@ -59,7 +59,7 @@ using namespace compound_assignment_impl;
 namespace plus_equal_impl {
 using ::operators::operator+=;
 struct plus_equal {
-	friend auto operator<=>(plus_equal const &, plus_equal const &) = default;
+	friend auto operator<=>(plus_equal, plus_equal) = default;
 };
 } // namespace plus_equal_impl
 using namespace plus_equal_impl;
@@ -67,7 +67,7 @@ using namespace plus_equal_impl;
 namespace minus_equal_impl {
 using ::operators::operator-=;
 struct minus_equal {
-	friend auto operator<=>(minus_equal const &, minus_equal const &) = default;
+	friend auto operator<=>(minus_equal, minus_equal) = default;
 };
 } // namespace minus_equal_impl
 using namespace minus_equal_impl;
@@ -75,7 +75,7 @@ using namespace minus_equal_impl;
 namespace times_equal_impl {
 using ::operators::operator*=;
 struct times_equal {
-	friend auto operator<=>(times_equal const &, times_equal const &) = default;
+	friend auto operator<=>(times_equal, times_equal) = default;
 };
 } // namespace times_equal_impl
 using namespace times_equal_impl;
@@ -83,7 +83,7 @@ using namespace times_equal_impl;
 namespace divides_equal_impl {
 using ::operators::operator/=;
 struct divides_equal {
-	friend auto operator<=>(divides_equal const &, divides_equal const &) = default;
+	friend auto operator<=>(divides_equal, divides_equal) = default;
 };
 } // namespace divides_equal_impl
 using namespace divides_equal_impl;
@@ -91,7 +91,7 @@ using namespace divides_equal_impl;
 namespace modulo_equal_impl {
 using ::operators::operator%=;
 struct modulo_equal {
-	friend auto operator<=>(modulo_equal const &, modulo_equal const &) = default;
+	friend auto operator<=>(modulo_equal, modulo_equal) = default;
 };
 } // namespace modulo_equal_impl
 using namespace modulo_equal_impl;
@@ -99,7 +99,7 @@ using namespace modulo_equal_impl;
 namespace left_shift_equal_impl {
 using ::operators::operator<<=;
 struct left_shift_equal {
-	friend auto operator<=>(left_shift_equal const &, left_shift_equal const &) = default;
+	friend auto operator<=>(left_shift_equal, left_shift_equal) = default;
 };
 } // namespace left_shift_equal_impl
 using namespace left_shift_equal_impl;
@@ -107,7 +107,7 @@ using namespace left_shift_equal_impl;
 namespace right_shift_equal_impl {
 using ::operators::operator>>=;
 struct right_shift_equal {
-	friend auto operator<=>(right_shift_equal const &, right_shift_equal const &) = default;
+	friend auto operator<=>(right_shift_equal, right_shift_equal) = default;
 };
 } // namespace right_shift_equal_impl
 using namespace right_shift_equal_impl;
@@ -115,7 +115,7 @@ using namespace right_shift_equal_impl;
 namespace and_equal_impl {
 using ::operators::operator&=;
 struct and_equal {
-	friend auto operator<=>(and_equal const &, and_equal const &) = default;
+	friend auto operator<=>(and_equal, and_equal) = default;
 };
 } // namespace and_equal_impl
 using namespace and_equal_impl;
@@ -123,7 +123,7 @@ using namespace and_equal_impl;
 namespace or_equal_impl {
 using ::operators::operator|=;
 struct or_equal {
-	friend auto operator<=>(or_equal const &, or_equal const &) = default;
+	friend auto operator<=>(or_equal, or_equal) = default;
 };
 } // namespace or_equal_impl
 using namespace or_equal_impl;
@@ -131,7 +131,7 @@ using namespace or_equal_impl;
 namespace xor_equal_impl {
 using ::operators::operator^=;
 struct xor_equal {
-	friend auto operator<=>(xor_equal const &, xor_equal const &) = default;
+	friend auto operator<=>(xor_equal, xor_equal) = default;
 };
 } // namespace xor_equal_impl
 using namespace xor_equal_impl;

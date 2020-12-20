@@ -30,7 +30,7 @@ constexpr auto operator++(auto & value) OPERATORS_RETURNS(
 )
 
 struct prefix_increment_tag {
-	friend auto operator<=>(prefix_increment_tag const &, prefix_increment_tag const &) = default;
+	friend auto operator<=>(prefix_increment_tag, prefix_increment_tag) = default;
 };
 
 } // namespace prefix_increment;
@@ -45,7 +45,7 @@ constexpr auto operator--(auto & value) OPERATORS_RETURNS(
 )
 
 struct prefix_decrement_tag {
-	friend auto operator<=>(prefix_decrement_tag const &, prefix_decrement_tag const &) = default;
+	friend auto operator<=>(prefix_decrement_tag, prefix_decrement_tag) = default;
 };
 
 } // namespace prefix_decrement
@@ -75,7 +75,7 @@ constexpr auto operator++(T & value, int) {
 }
 
 struct postfix_increment_tag {
-	friend auto operator<=>(postfix_increment_tag const &, postfix_increment_tag const &) = default;
+	friend auto operator<=>(postfix_increment_tag, postfix_increment_tag) = default;
 };
 
 } // namespace postfix_increment
@@ -97,7 +97,7 @@ constexpr auto operator--(T & value, int) {
 }
 
 struct postfix_decrement_tag {
-	friend auto operator<=>(postfix_decrement_tag const &, postfix_decrement_tag const &) = default;
+	friend auto operator<=>(postfix_decrement_tag, postfix_decrement_tag) = default;
 };
 
 } // namespace postfix_decrement
@@ -121,7 +121,7 @@ using prefix::operator++;
 using postfix::operator++;
 
 struct increment {
-	friend auto operator<=>(increment const &, increment const &) = default;
+	friend auto operator<=>(increment, increment) = default;
 };
 
 } // namespace all_increment
@@ -133,7 +133,7 @@ using prefix::operator--;
 using postfix::operator--;
 
 struct decrement {
-	friend auto operator<=>(decrement const &, decrement const &) = default;
+	friend auto operator<=>(decrement, decrement) = default;
 };
 
 } // namespace all_decrement

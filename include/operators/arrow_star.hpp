@@ -19,7 +19,7 @@ constexpr auto operator->*(auto && lhs, auto && rhs) OPERATORS_RETURNS(
 )
 
 struct arrow_star {
-	friend auto operator<=>(arrow_star const &, arrow_star const &) = default;
+	friend auto operator<=>(arrow_star, arrow_star) = default;
 };
 
 } // namespace arrow_star_impl

@@ -117,14 +117,14 @@ constexpr auto addressof_wrapper(auto && object) noexcept {
 template<typename Derived>
 struct arrow {
 	OPERATORS_DETAIL_ARROW_DEFINITIONS(::operators::detail::cast_self<Derived>)
-	friend auto operator<=>(arrow const &, arrow const &) = default;
+	friend auto operator<=>(arrow, arrow) = default;
 };
 
 
 template<typename Derived>
 struct arrow_proxy {
 	OPERATORS_DETAIL_ARROW_PROXY_DEFINITIONS(::operators::detail::cast_self<Derived>)
-	friend auto operator<=>(arrow_proxy const &, arrow_proxy const &) = default;
+	friend auto operator<=>(arrow_proxy, arrow_proxy) = default;
 };
 
 } // namespace operators

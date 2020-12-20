@@ -74,7 +74,7 @@ private:
 	}
 public:
 	OPERATORS_DETAIL_BRACKET_ITERATOR_DEFINITIONS_IMPL(self())
-	friend auto operator<=>(iterator const &, iterator const &) = default;
+	friend auto operator<=>(iterator, iterator) = default;
 };
 
 
@@ -89,7 +89,7 @@ private:
 	}
 public:
 	OPERATORS_DETAIL_BRACKET_SEQUENCE_RANGE_DEFINITIONS_IMPL(self())
-	friend auto operator<=>(sequence_range const &, sequence_range const &) = default;
+	friend auto operator<=>(sequence_range, sequence_range) = default;
 };
 
 } // namespace bracket

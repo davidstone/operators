@@ -20,7 +20,7 @@ constexpr auto operator-(auto && lhs, auto && rhs) OPERATORS_RETURNS(
 )
 
 struct minus {
-	friend auto operator<=>(minus const &, minus const &) = default;
+	friend auto operator<=>(minus, minus) = default;
 };
 
 } // namespace binary_minus
