@@ -9,7 +9,10 @@ project(operators LANGUAGES CXX)
 
 enable_testing()
 
-add_subdirectory(cmake_strict_defaults)
+get_directory_property(has_parent PARENT_DIRECTORY)
+if (NOT has_parent)
+	add_subdirectory(cmake_strict_defaults)
+endif()
 
 add_library(operators INTERFACE)
 
