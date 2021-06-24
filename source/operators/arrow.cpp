@@ -11,11 +11,10 @@ constexpr auto const & as_const_ref(auto && value) {
 	return value;
 }
 constexpr auto & as_ref(auto && value) {
-	return value;
+	return static_cast<std::remove_reference_t<decltype(value)> &>(value);
 }
-// Until compilers implement implicit moves from rvalue references
 constexpr auto && as_ref_ref(auto && value) {
-	return OPERATORS_FORWARD(value);
+	return value;
 }
 
 template<typename T>
