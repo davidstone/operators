@@ -11,7 +11,7 @@ enable_testing()
 
 get_directory_property(has_parent PARENT_DIRECTORY)
 if (NOT has_parent)
-	add_subdirectory(cmake_strict_defaults)
+	add_subdirectory(dependencies/cmake_strict_defaults)
 endif()
 
 add_library(operators INTERFACE)
