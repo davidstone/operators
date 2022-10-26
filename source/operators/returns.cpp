@@ -5,6 +5,7 @@
 
 #include <operators/returns.hpp>
 
+#include <concepts>
 #include <type_traits>
 
 namespace {
@@ -19,19 +20,19 @@ auto parameter(auto x) OPERATORS_RETURNS(
 	x
 )
 
-static_assert(std::is_same_v<decltype(parameter(5)), int>);
-static_assert(std::is_same_v<decltype(parameter(move_only())), move_only>);
+static_assert(std::same_as<decltype(parameter(5)), int>);
+static_assert(std::same_as<decltype(parameter(move_only())), move_only>);
 
 auto prvalue() OPERATORS_RETURNS(
 	move_only()
 )
 
-static_assert(std::is_same_v<decltype(prvalue()), move_only>);
+static_assert(std::same_as<decltype(prvalue()), move_only>);
 
 auto ref(auto && r) OPERATORS_RETURNS(
 	r
 )
 
-static_assert(std::is_same_v<decltype(ref(move_only())), move_only &&>);
+static_assert(std::same_as<decltype(ref(move_only())), move_only &&>);
 
 } // namespace
