@@ -1,16 +1,44 @@
-// Copyright David Stone 2019.
+// Copyright David Stone 2023.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <operators/unary_plus.hpp>
+module;
 
+#include <operators/returns.hpp>
+
+export module operators.unary_plus;
+
+import std_module;
+
+// Not proposed for standardization
+
+#define OPERATORS_UNARY_PLUS_DEFINITION \
+	constexpr auto operator+(auto value) OPERATORS_RETURNS( \
+		value \
+	)
+
+namespace operators_impl {
+
+struct plus {
+	friend OPERATORS_UNARY_PLUS_DEFINITION
+	friend auto operator<=>(plus, plus) = default;
+};
+
+} // namespace operators_impl
+
+namespace operators::unary {
+
+export OPERATORS_UNARY_PLUS_DEFINITION
+export using plus = operators_impl::plus;
+
+} // namespace operators::unary
 namespace {
 
 template<typename T>
 concept has_unary_minus = requires(T value) { -value; };
 
-struct adl : operators::unary::plus {
+struct adl : private operators::unary::plus {
 	constexpr explicit adl(int value_):
 		value(value_)
 	{

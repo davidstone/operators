@@ -1,9 +1,171 @@
-// Copyright David Stone 2019.
+// Copyright David Stone 2023.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <operators/increment_decrement.hpp>
+module;
+
+#include <operators/returns.hpp>
+
+export module operators.increment_decrement;
+
+import std_module;
+
+#define OPERATORS_PREFIX_INCREMENT_DEFINITION \
+	constexpr auto operator++(auto & value) OPERATORS_RETURNS( \
+		value += 1 \
+	)
+
+#define OPERATORS_PREFIX_DECREMENT_DEFINITION \
+	constexpr auto operator--(auto & value) OPERATORS_RETURNS( \
+		value -= 1 \
+	)
+
+namespace operators {
+
+template<typename T>
+concept prefix_incrementable = requires(T value) { ++value; };
+
+template<typename T>
+concept prefix_decrementable = requires(T value) { --value; };
+
+template<typename T>
+constexpr auto postfix_increment_impl(T & value) {
+	if constexpr (std::is_copy_constructible_v<T>) {
+		auto previous = value;
+		++value;
+		return previous;
+	} else {
+		++value;
+	}
+}
+
+template<typename T>
+constexpr auto postfix_decrement_impl(T & value) {
+	if constexpr (std::is_copy_constructible_v<T>) {
+		auto previous = value;
+		--value;
+		return previous;
+	} else {
+		--value;
+	}
+}
+
+} // namespace operators
+
+#define OPERATORS_POSTFIX_INCREMENT_DEFINITION \
+	constexpr auto operator++(operators::prefix_incrementable auto & value, int) { \
+		return ::operators::postfix_increment_impl(value); \
+	}
+
+#define OPERATORS_POSTFIX_DECREMENT_DEFINITION \
+	constexpr auto operator--(operators::prefix_decrementable auto & value, int) { \
+		return ::operators::postfix_decrement_impl(value); \
+	}
+
+namespace operators_impl {
+
+namespace prefix_increment {
+struct impl {
+	friend OPERATORS_PREFIX_INCREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace prefix_decrement {
+struct impl {
+	friend OPERATORS_PREFIX_DECREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace postfix_increment {
+struct impl {
+	friend OPERATORS_POSTFIX_INCREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace postfix_decrement {
+struct impl {
+	friend OPERATORS_POSTFIX_DECREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace increment {
+struct impl {
+	friend OPERATORS_PREFIX_INCREMENT_DEFINITION
+	friend OPERATORS_POSTFIX_INCREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace decrement {
+struct impl {
+	friend OPERATORS_PREFIX_DECREMENT_DEFINITION
+	friend OPERATORS_POSTFIX_DECREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace prefix {
+struct impl {
+	friend OPERATORS_PREFIX_INCREMENT_DEFINITION
+	friend OPERATORS_PREFIX_DECREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace postfix {
+struct impl {
+	friend OPERATORS_POSTFIX_INCREMENT_DEFINITION
+	friend OPERATORS_POSTFIX_DECREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+
+}
+namespace all {
+struct impl {
+	friend OPERATORS_PREFIX_INCREMENT_DEFINITION
+	friend OPERATORS_PREFIX_DECREMENT_DEFINITION
+	friend OPERATORS_POSTFIX_INCREMENT_DEFINITION
+	friend OPERATORS_POSTFIX_DECREMENT_DEFINITION
+	friend auto operator<=>(impl, impl) = default;
+};
+}
+
+} // namespace operators_impl
+
+namespace operators {
+namespace prefix {
+
+export OPERATORS_PREFIX_INCREMENT_DEFINITION
+export OPERATORS_PREFIX_DECREMENT_DEFINITION
+export using increment = operators_impl::prefix_increment::impl;
+export using decrement = operators_impl::prefix_decrement::impl;
+export using increment_decrement = operators_impl::prefix::impl;
+
+} // namespace prefix
+namespace postfix {
+
+export OPERATORS_POSTFIX_INCREMENT_DEFINITION
+export OPERATORS_POSTFIX_DECREMENT_DEFINITION
+export using increment = operators_impl::postfix_increment::impl;
+export using decrement = operators_impl::postfix_decrement::impl;
+export using increment_decrement = operators_impl::postfix::impl;
+
+} // namespace postfix
+
+export using operators::prefix::operator++;
+export using operators::prefix::operator--;
+export using operators::postfix::operator++;
+export using operators::postfix::operator--;
+export using increment = operators_impl::increment::impl;
+export using decrement = operators_impl::decrement::impl;
+export using increment_decrement = operators_impl::all::impl;
+
+} // namespace operators
 
 namespace {
 
@@ -37,7 +199,7 @@ constexpr auto test_increment_decrement(auto value, auto const expected_value, a
 
 namespace base_all {
 
-struct s : operators::increment, operators::decrement {
+struct s : private operators::increment_decrement {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -66,7 +228,7 @@ static_assert(test_increment_decrement(s(5), s(4), s(5), postfix_decrement));
 
 namespace base_increment {
 
-struct s : operators::increment {
+struct s : private operators::increment {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -94,7 +256,7 @@ static_assert(!has_decrement<s>);
 
 namespace base_decrement {
 
-struct s : operators::decrement {
+struct s : private operators::decrement {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -122,7 +284,7 @@ static_assert(test_increment_decrement(s(5), s(4), s(5), postfix_decrement));
 
 namespace base_prefix_increment {
 
-struct s : operators::prefix::increment {
+struct s : private operators::prefix::increment {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -150,7 +312,7 @@ static_assert(!has_decrement<s>);
 
 namespace bad_base_postfix_increment {
 
-struct s : operators::postfix::increment {
+struct s : private operators::postfix::increment {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -177,7 +339,7 @@ static_assert(!has_decrement<s>);
 
 namespace base_postfix_increment {
 
-struct s : operators::postfix::increment {
+struct s : private operators::postfix::increment {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -205,7 +367,7 @@ static_assert(!has_decrement<s>);
 
 namespace base_prefix_decrement {
 
-struct s : operators::prefix::decrement {
+struct s : private operators::prefix::decrement {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -233,7 +395,7 @@ static_assert(!has_postfix_decrement<s>);
 
 namespace base_base_postfix_decrement {
 
-struct s : operators::postfix::decrement {
+struct s : private operators::postfix::decrement {
 	constexpr explicit s(int value_):
 		value(value_)
 	{
@@ -260,7 +422,7 @@ static_assert(!has_decrement<s>);
 
 namespace base_postfix_decrement {
 
-struct s : operators::postfix::decrement {
+struct s : private operators::postfix::decrement {
 	constexpr explicit s(int value_):
 		value(value_)
 	{

@@ -3,7 +3,10 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#pragma once
+#ifndef OPERATORS_FORWARD_HPP
+#define OPERATORS_FORWARD_HPP
 
 // This must use a variadic macro in case the argument has a comma
 #define OPERATORS_FORWARD(...) static_cast<decltype(__VA_ARGS__) &&>(__VA_ARGS__)
+
+#endif // OPERATORS_FORWARD_HPP

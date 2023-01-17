@@ -3,7 +3,58 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+module;
+
 #include <operators/bracket.hpp>
+
+export module operators.bracket;
+
+import std_module;
+
+// Not proposed for standardization
+
+namespace operators_impl {
+
+template<typename Derived>
+struct iterator_bracket {
+private:
+	constexpr auto self() const & -> Derived const & {
+		return static_cast<Derived const &>(*this);
+	}
+	constexpr auto self() & -> Derived & {
+		return static_cast<Derived &>(*this);
+	}
+public:
+	OPERATORS_DETAIL_BRACKET_ITERATOR_DEFINITIONS_IMPL(self())
+	friend auto operator<=>(iterator_bracket, iterator_bracket) = default;
+};
+
+
+template<typename Derived>
+struct sequence_range_bracket {
+private:
+	constexpr auto self() const & -> Derived const & {
+		return static_cast<Derived const &>(*this);
+	}
+	constexpr auto self() & -> Derived & {
+		return static_cast<Derived &>(*this);
+	}
+public:
+	OPERATORS_DETAIL_BRACKET_SEQUENCE_RANGE_DEFINITIONS_IMPL(self())
+	friend auto operator<=>(sequence_range_bracket, sequence_range_bracket) = default;
+};
+
+} // namespace operators_impl
+
+namespace operators {
+
+export template<typename Derived>
+using iterator_bracket = operators_impl::iterator_bracket<Derived>;
+
+export template<typename Derived>
+using sequence_range_bracket = operators_impl::sequence_range_bracket<Derived>;
+
+} // namespace operators
 
 namespace {
 
@@ -43,7 +94,7 @@ static_assert(as_ref_ref(macro_iterator(5))[3] == 8);
 static_assert(macro_iterator(5)[3] == 8);
 
 
-struct crtp_iterator : operators::bracket::iterator<crtp_iterator> {
+struct crtp_iterator : operators::iterator_bracket<crtp_iterator> {
 	constexpr explicit crtp_iterator(int value_):
 		value(value_)
 	{
@@ -95,7 +146,7 @@ static_assert(as_ref_ref(macro_sequence_range(5))[3] == 28);
 static_assert(macro_sequence_range(5)[3] == 28);
 
 
-struct crtp_sequence_range : operators::bracket::sequence_range<crtp_sequence_range> {
+struct crtp_sequence_range : operators::sequence_range_bracket<crtp_sequence_range> {
 	constexpr explicit crtp_sequence_range(int value_):
 		value(value_)
 	{

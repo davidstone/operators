@@ -1,13 +1,43 @@
-// Copyright David Stone 2019.
+// Copyright David Stone 2023.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <operators/binary_minus.hpp>
+module;
+
+#include <operators/forward.hpp>
+#include <operators/returns.hpp>
+
+export module operators.binary_minus;
+
+import std_module;
+
+// Not proposed for standardization
+
+#define OPERATORS_BINARY_MINUS_DEFINITION \
+	constexpr auto operator-(auto && lhs, auto && rhs) OPERATORS_RETURNS( \
+		OPERATORS_FORWARD(lhs) + -OPERATORS_FORWARD(rhs) \
+	)
+
+namespace operators_impl {
+
+struct minus {
+	friend OPERATORS_BINARY_MINUS_DEFINITION
+	friend auto operator<=>(minus, minus) = default;
+};
+
+} // namespace operators_impl
+
+namespace operators::binary {
+
+export OPERATORS_BINARY_MINUS_DEFINITION
+export using minus = operators_impl::minus;
+
+} // namespace operators::binary
 
 namespace {
 
-struct adl : operators::binary::binary_minus::minus {
+struct adl : operators::binary::minus {
 	constexpr explicit adl(int value_):
 		value(value_)
 	{

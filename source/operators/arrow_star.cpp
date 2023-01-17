@@ -1,9 +1,37 @@
-// Copyright David Stone 2019.
+// Copyright David Stone 2023.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <operators/arrow_star.hpp>
+module;
+
+#include <operators/forward.hpp>
+#include <operators/returns.hpp>
+
+export module operators.arrow_star;
+
+import std_module;
+
+#define OPERATORS_ARROW_STAR_DEFINITION \
+	constexpr auto operator->*(auto && lhs, auto && rhs) OPERATORS_RETURNS( \
+		(*OPERATORS_FORWARD(lhs)).*OPERATORS_FORWARD(rhs) \
+	)
+
+namespace operators_impl {
+
+struct arrow_star {
+	friend OPERATORS_ARROW_STAR_DEFINITION
+	friend auto operator<=>(arrow_star, arrow_star) = default;
+};
+
+} // namespace operators_impl
+
+namespace operators {
+
+export OPERATORS_ARROW_STAR_DEFINITION
+export using arrow_star = operators_impl::arrow_star;
+
+} // namespace operators
 
 namespace {
 
@@ -18,7 +46,7 @@ struct dot_star {
 
 constexpr int dot_star::* member(&dot_star::value);
 
-struct adl : operators::arrow_star {
+struct adl : private operators::arrow_star {
 	constexpr explicit adl(int value_):
 		value(value_)
 	{

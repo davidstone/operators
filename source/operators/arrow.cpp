@@ -1,9 +1,31 @@
-// Copyright David Stone 2019.
+// Copyright David Stone 2023.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+module;
+
 #include <operators/arrow.hpp>
+
+export module operators.arrow;
+
+import operators.arrow_impl.cast_self;
+
+namespace operators {
+
+export template<typename Derived>
+struct arrow {
+	OPERATORS_DETAIL_ARROW_DEFINITIONS(::operators::detail::cast_self<Derived>)
+	friend auto operator<=>(arrow, arrow) = default;
+};
+
+export template<typename Derived>
+struct arrow_proxy {
+	OPERATORS_DETAIL_ARROW_PROXY_DEFINITIONS(::operators::detail::cast_self<Derived>)
+	friend auto operator<=>(arrow_proxy, arrow_proxy) = default;
+};
+
+} // namespace operators
 
 namespace {
 

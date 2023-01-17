@@ -5,8 +5,7 @@
 
 #include <operators/returns.hpp>
 
-#include <concepts>
-#include <type_traits>
+import std_module;
 
 namespace {
 
