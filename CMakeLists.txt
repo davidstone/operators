@@ -4,6 +4,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 cmake_minimum_required(VERSION 3.27 FATAL_ERROR)
+cmake_policy(VERSION 3.27...3.28)
 
 project(operators LANGUAGES CXX)
 
@@ -35,7 +36,7 @@ target_link_libraries(operators
 	PRIVATE strict_defaults
 )
 
-target_sources(operators PUBLIC
+target_sources(operators PRIVATE
 	source/operators/forward.cpp
 	source/operators/returns.cpp
 )
