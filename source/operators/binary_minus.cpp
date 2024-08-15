@@ -19,6 +19,7 @@ import std_module;
 		OPERATORS_FORWARD(lhs) + -OPERATORS_FORWARD(rhs) \
 	)
 
+namespace {
 namespace operators_impl {
 
 struct minus {
@@ -27,6 +28,7 @@ struct minus {
 };
 
 } // namespace operators_impl
+} // namespace
 
 namespace operators::binary {
 

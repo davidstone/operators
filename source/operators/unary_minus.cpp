@@ -21,6 +21,7 @@ import std_module;
 		0 - OPERATORS_FORWARD(value) \
 	)
 
+namespace {
 namespace operators_impl {
 
 struct minus {
@@ -29,6 +30,7 @@ struct minus {
 };
 
 } // namespace operators_impl
+} // namespace
 
 namespace operators::unary {
 
