@@ -29,26 +29,30 @@ concept prefix_incrementable = requires(T value) { ++value; };
 template<typename T>
 concept prefix_decrementable = requires(T value) { --value; };
 
-template<typename T>
-constexpr auto postfix_increment_impl(T & value) {
-	if constexpr (std::is_copy_constructible_v<T>) {
-		auto previous = value;
-		++value;
-		return previous;
-	} else {
-		++value;
-	}
+// Work around https://github.com/llvm/llvm-project/issues/95280
+
+template<std::copy_constructible T>
+constexpr auto postfix_increment_impl(T & value) -> T {
+	auto previous = value;
+	++value;
+	return previous;
 }
 
 template<typename T>
-constexpr auto postfix_decrement_impl(T & value) {
-	if constexpr (std::is_copy_constructible_v<T>) {
-		auto previous = value;
-		--value;
-		return previous;
-	} else {
-		--value;
-	}
+constexpr auto postfix_increment_impl(T & value) -> void {
+	++value;
+}
+
+template<std::copy_constructible T>
+constexpr auto postfix_decrement_impl(T & value) -> T {
+	auto previous = value;
+	--value;
+	return previous;
+}
+
+template<typename T>
+constexpr auto postfix_decrement_impl(T & value) -> void {
+	--value;
 }
 
 } // namespace operators
