@@ -19,7 +19,7 @@ namespace operators::detail {
 export struct indirect {
 	template<typename T>
 	static constexpr auto identity(T && value) -> T && {
-		return value
+		return value;
 	}
 };
 
