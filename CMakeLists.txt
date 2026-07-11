@@ -27,7 +27,7 @@ target_include_directories(operators PUBLIC
 )
 
 target_link_libraries(operators
-	PUBLIC strict_defaults_interface std_module
+	PUBLIC std_module
 	PRIVATE strict_defaults
 )
 
